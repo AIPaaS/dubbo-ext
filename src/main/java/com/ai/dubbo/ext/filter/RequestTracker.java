@@ -1,8 +1,6 @@
 package com.ai.dubbo.ext.filter;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +37,7 @@ public class RequestTracker implements Filter {
 				"yyyyMMddHHmmss") + "_" + UUIDTool.genId32();
 		Gson gson = new Gson();
 		// 获取返回类型
-		Class retType = getReturnType(invoker, reqMethod, reqParams);
+
 		// 打印请求参数明细
 		if (null != reqParams && reqParams.length >= 0) {
 			if (LOG.isInfoEnabled()) {
@@ -55,6 +53,8 @@ public class RequestTracker implements Filter {
 						reqSeq, protocol, reqSV, reqMethod, "blank");
 			}
 		}
+		Class retType = getReturnType(invoker, reqMethod,
+				invocation.getParameterTypes());
 		// 执行结果
 		Result result = null;
 		try {
@@ -108,24 +108,18 @@ public class RequestTracker implements Filter {
 
 	@SuppressWarnings("rawtypes")
 	private Class getReturnType(Invoker<?> invoker, String reqMethod,
-			Object[] reqParams) {
+			Class[] paramTypes) {
 
-		List<Class> paramTypes = new ArrayList<>();
-		if (null != reqParams) {
-			for (Object param : reqParams) {
-				paramTypes.add(param.getClass());
-			}
-		}
 		try {
 			Method target = invoker.getInterface().getMethod(reqMethod,
-					paramTypes.toArray(new Class[paramTypes.size()]));
+					paramTypes);
 			if (null == target)
 				return null;
 			Class returnType = target.getReturnType();
 			return returnType;
 		} catch (Exception e) {
 			LOG.error("reqMethod:{},paramTypes{},invocation{}方法发生异常:{}",
-					reqMethod, reqParams, invoker.getInterface(), e);
+					reqMethod, paramTypes, invoker.getInterface(), e);
 			return null;
 		}
 	}
