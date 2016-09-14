@@ -2,6 +2,14 @@ package com.ai.dubbo.ext.vo;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BaseInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/**

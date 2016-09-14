@@ -2,6 +2,15 @@ package com.ai.dubbo.ext.vo;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BaseResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +54,7 @@ public class BaseResponse implements Serializable {
 		this.resultMsg = resultMsg;
 
 	}
-
+	@JsonProperty(value="isSuccess")
 	public boolean isSuccess() {
 		return isSuccess;
 	}

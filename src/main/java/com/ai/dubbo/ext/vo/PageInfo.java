@@ -3,6 +3,12 @@ package com.ai.dubbo.ext.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * 分页对象.<br>
  * 提供给外部系统的分页Bean<br>
@@ -12,6 +18,9 @@ import java.util.List;
  *            Copyright (c) 2015 asiainfo.com <br>
  * @author gucl
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PageInfo<T> extends BaseResponse implements Serializable {
 	public PageInfo(boolean isSuccess, String resultCode, String resultMessage,
 			String info) {
