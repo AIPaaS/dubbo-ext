@@ -4,7 +4,9 @@ import java.lang.reflect.Method;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 
+import com.ai.dubbo.ext.vo.BaseInfo;
 import com.ai.dubbo.ext.vo.BaseResponse;
 import com.ai.paas.ipaas.PaaSConstant;
 import com.ai.paas.ipaas.util.DateTimeUtil;
@@ -40,6 +42,16 @@ public class RequestTracker implements Filter {
 
 		// 打印请求参数明细
 		if (null != reqParams && reqParams.length >= 0) {
+			// 这里需要设置下区域参数
+			for (Object obj : reqParams) {
+				if (null != obj && obj instanceof BaseInfo) {
+					BaseInfo baseInfo = (BaseInfo) obj;
+					if (null != baseInfo.getLocale()) {
+						//这里要测试
+						LocaleContextHolder.setLocale(baseInfo.getLocale());
+					}
+				}
+			}
 			if (LOG.isInfoEnabled()) {
 				LOG.info(
 						"req_seq:{},req_protocol:{},srv_name:{},srv_method:{},srv_params:{}",
