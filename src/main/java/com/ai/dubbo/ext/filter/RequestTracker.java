@@ -50,6 +50,9 @@ public class RequestTracker implements Filter {
 						//这里要测试
 						LocaleContextHolder.setLocale(baseInfo.getLocale());
 					}
+					if(null!=baseInfo.getTimeZone()) {
+						LocaleContextHolder.setTimeZone(baseInfo.getTimeZone());
+					}
 				}
 			}
 			if (LOG.isInfoEnabled()) {

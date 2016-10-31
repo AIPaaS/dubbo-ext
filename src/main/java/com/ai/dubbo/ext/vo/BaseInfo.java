@@ -2,6 +2,7 @@ package com.ai.dubbo.ext.vo;
 
 import java.io.Serializable;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,6 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.context.i18n.LocaleContextHolder;
 
+import com.ai.paas.ipaas.i18n.ZoneContextHolder;
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -17,9 +20,12 @@ public class BaseInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public BaseInfo() {
-		//set in the web
+		// set in the web
 		if (null != LocaleContextHolder.getLocale()) {
 			locale = LocaleContextHolder.getLocale();
+		}
+		if (null != ZoneContextHolder.getZone()) {
+			timeZone = TimeZone.getTimeZone(ZoneContextHolder.getZone());
 		}
 	}
 
@@ -35,6 +41,8 @@ public class BaseInfo implements Serializable {
 	 * 区域属性
 	 */
 	private Locale locale;
+
+	private TimeZone timeZone;
 
 	public String getTenantId() {
 		return tenantId;
@@ -58,6 +66,14 @@ public class BaseInfo implements Serializable {
 
 	public void setLocale(Locale locale) {
 		this.locale = locale;
+	}
+
+	public TimeZone getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(TimeZone timeZone) {
+		this.timeZone = timeZone;
 	}
 
 }
