@@ -77,7 +77,7 @@ public class RequestTracker implements Filter {
 			if (LOG.isInfoEnabled()) {
 				LOG.info(
 						"req_seq:{} call over....!,req_protocol:{},srv_name:{},srv_method:{},result{}",
-						reqSeq, protocol, reqSV, reqMethod, result);
+						reqSeq, protocol, reqSV, reqMethod, gson.toJson(result));
 			}
 			return writeCallResult(protocol, result, retType);
 		} catch (Throwable ex) {
